@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JSON 驗證工具 - 檢查 JSON 格式是否正確，提供錯誤定位和修正建議">
+    <title>JSON Validator - JSON 驗證工具</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">{ }</span>
+                <h1>JSON Validator</h1>
+            </div>
+            <p class="tagline">驗證你的 JSON，找出錯誤並取得修正建議</p>
+        </header>
+
+        <main class="main-content">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="raw">
+                    <span class="tab-icon">📝</span>
+                    Raw JSON
+                </button>
+                <button class="tab-btn" data-tab="serialized">
+                    <span class="tab-icon">🔗</span>
+                    Serialized JSON
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Raw JSON Tab -->
+                <div class="tab-panel active" id="raw-panel">
+                    <div class="input-section">
+                        <div class="section-header">
+                            <h2>輸入 JSON</h2>
+                            <div class="action-buttons">
+                                <button class="btn btn-secondary" id="raw-format-btn">
+                                    <span>✨</span> 格式化
+                                </button>
+                                <button class="btn btn-secondary" id="raw-clear-btn">
+                                    <span>🗑️</span> 清除
+                                </button>
+                                <button class="btn btn-primary" id="raw-validate-btn">
+                                    <span>✓</span> 驗證
+                                </button>
+                            </div>
+                        </div>
+                        <div class="editor-wrapper">
+                            <div class="line-numbers" id="raw-line-numbers">1</div>
+                            <textarea 
+                                id="raw-input" 
+                                class="json-input" 
+                                placeholder='在此貼上您的 JSON...&#10;&#10;例如:&#10;{&#10;  "name": "John",&#10;  "age": 30&#10;}'
+                                spellcheck="false"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Serialized JSON Tab -->
+                <div class="tab-panel" id="serialized-panel">
+                    <div class="input-section">
+                        <div class="section-header">
+                            <h2>輸入序列化 JSON</h2>
+                            <div class="action-buttons">
+                                <button class="btn btn-secondary" id="serialized-deserialize-btn">
+                                    <span>🔄</span> 反序列化
+                                </button>
+                                <button class="btn btn-secondary" id="serialized-clear-btn">
+                                    <span>🗑️</span> 清除
+                                </button>
+                                <button class="btn btn-primary" id="serialized-validate-btn">
+                                    <span>✓</span> 驗證
+                                </button>
+                            </div>
+                        </div>
+                        <div class="editor-wrapper">
+                            <div class="line-numbers" id="serialized-line-numbers">1</div>
+                            <textarea 
+                                id="serialized-input" 
+                                class="json-input" 
+                                placeholder='在此貼上序列化的 JSON 字串...&#10;&#10;例如:&#10;"{\"name\": \"John\", \"age\": 30}"&#10;&#10;或&#10;{\\"name\\": \\"John\\", \\"age\\": 30}'
+                                spellcheck="false"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section" id="result-section">
+                <div class="result-header">
+                    <h2>驗證結果</h2>
+                    <div class="result-status" id="result-status">
+                        <span class="status-icon">⏳</span>
+                        <span class="status-text">等待輸入...</span>
+                    </div>
+                </div>
+                <div class="result-content" id="result-content">
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <p>輸入 JSON 後點擊「驗證」按鈕</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Made with ❤️ | <a href="https://github.com" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
