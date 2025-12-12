@@ -1,120 +1,242 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="JSON 驗證工具 - 檢查 JSON 格式是否正確，提供錯誤定位和修正建議">
-    <title>JSON Validator - JSON 驗證工具</title>
+    <meta name="description" content="JSON Editor - 編輯、格式化、驗證、比較、修復 JSON 的完整工具">
+    <title>JSON Editor - 完整 JSON 編輯工具</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-container">
+        <!-- Header -->
         <header class="header">
-            <div class="logo">
-                <span class="logo-icon">{ }</span>
-                <h1>JSON Validator</h1>
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">{ }</span>
+                    <h1>JSON Editor</h1>
+                </div>
             </div>
-            <p class="tagline">驗證你的 JSON，找出錯誤並取得修正建議</p>
+            <div class="header-right">
+                <a href="https://github.com/paul0728/json-validator" target="_blank" class="github-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+            </div>
         </header>
 
+        <!-- Main Toolbar -->
+        <div class="main-toolbar">
+            <div class="toolbar-group">
+                <button class="toolbar-btn" id="btn-open" title="開啟檔案">
+                    <span class="icon">📂</span>
+                    <span class="label">開啟</span>
+                </button>
+                <button class="toolbar-btn" id="btn-save" title="下載 JSON">
+                    <span class="icon">💾</span>
+                    <span class="label">下載</span>
+                </button>
+                <input type="file" id="file-input" accept=".json,.txt,.csv" hidden>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group">
+                <button class="toolbar-btn" id="btn-format" title="格式化 JSON">
+                    <span class="icon">✨</span>
+                    <span class="label">格式化</span>
+                </button>
+                <button class="toolbar-btn" id="btn-minify" title="壓縮 JSON">
+                    <span class="icon">📦</span>
+                    <span class="label">壓縮</span>
+                </button>
+                <button class="toolbar-btn" id="btn-repair" title="修復 JSON">
+                    <span class="icon">🔧</span>
+                    <span class="label">修復</span>
+                </button>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group">
+                <button class="toolbar-btn" id="btn-validate" title="驗證 JSON">
+                    <span class="icon">✓</span>
+                    <span class="label">驗證</span>
+                </button>
+                <button class="toolbar-btn" id="btn-validate-serialized" title="驗證序列化 JSON">
+                    <span class="icon">🔗</span>
+                    <span class="label">序列化驗證</span>
+                </button>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group">
+                <button class="toolbar-btn" id="btn-compare" title="比較 JSON">
+                    <span class="icon">⚖️</span>
+                    <span class="label">比較</span>
+                </button>
+                <button class="toolbar-btn" id="btn-query" title="查詢 JSON">
+                    <span class="icon">🔍</span>
+                    <span class="label">查詢</span>
+                </button>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group">
+                <button class="toolbar-btn" id="btn-to-csv" title="JSON 轉 CSV">
+                    <span class="icon">📊</span>
+                    <span class="label">→ CSV</span>
+                </button>
+                <button class="toolbar-btn" id="btn-from-csv" title="CSV 轉 JSON">
+                    <span class="icon">📋</span>
+                    <span class="label">CSV →</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
         <main class="main-content">
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="raw">
-                    <span class="tab-icon">📝</span>
-                    Raw JSON
-                </button>
-                <button class="tab-btn" data-tab="serialized">
-                    <span class="tab-icon">🔗</span>
-                    Serialized JSON
-                </button>
-            </div>
-
-            <div class="tab-content">
-                <!-- Raw JSON Tab -->
-                <div class="tab-panel active" id="raw-panel">
-                    <div class="input-section">
-                        <div class="section-header">
-                            <h2>輸入 JSON</h2>
-                            <div class="action-buttons">
-                                <button class="btn btn-secondary" id="raw-format-btn">
-                                    <span>✨</span> 格式化
-                                </button>
-                                <button class="btn btn-secondary" id="raw-clear-btn">
-                                    <span>🗑️</span> 清除
-                                </button>
-                                <button class="btn btn-primary" id="raw-validate-btn">
-                                    <span>✓</span> 驗證
-                                </button>
-                            </div>
-                        </div>
-                        <div class="editor-wrapper">
-                            <div class="line-numbers" id="raw-line-numbers">1</div>
-                            <textarea 
-                                id="raw-input" 
-                                class="json-input" 
-                                placeholder='在此貼上您的 JSON...&#10;&#10;例如:&#10;{&#10;  "name": "John",&#10;  "age": 30&#10;}'
-                                spellcheck="false"
-                            ></textarea>
-                        </div>
+            <!-- Left Panel -->
+            <div class="panel left-panel" id="left-panel">
+                <div class="panel-header">
+                    <div class="panel-title">編輯區</div>
+                    <div class="mode-switcher">
+                        <button class="mode-btn active" data-mode="text" data-panel="left">Text</button>
+                        <button class="mode-btn" data-mode="tree" data-panel="left">Tree</button>
+                        <button class="mode-btn" data-mode="table" data-panel="left">Table</button>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="icon-btn" id="btn-copy-left" title="複製">📋</button>
+                        <button class="icon-btn" id="btn-clear-left" title="清除">🗑️</button>
+                        <button class="icon-btn" id="btn-expand-all-left" title="展開全部">➕</button>
+                        <button class="icon-btn" id="btn-collapse-all-left" title="收合全部">➖</button>
                     </div>
                 </div>
-
-                <!-- Serialized JSON Tab -->
-                <div class="tab-panel" id="serialized-panel">
-                    <div class="input-section">
-                        <div class="section-header">
-                            <h2>輸入序列化 JSON</h2>
-                            <div class="action-buttons">
-                                <button class="btn btn-secondary" id="serialized-deserialize-btn">
-                                    <span>🔄</span> 反序列化
-                                </button>
-                                <button class="btn btn-secondary" id="serialized-clear-btn">
-                                    <span>🗑️</span> 清除
-                                </button>
-                                <button class="btn btn-primary" id="serialized-validate-btn">
-                                    <span>✓</span> 驗證
-                                </button>
-                            </div>
-                        </div>
+                <div class="panel-content">
+                    <!-- Text Mode -->
+                    <div class="editor-view text-view active" data-mode="text">
                         <div class="editor-wrapper">
-                            <div class="line-numbers" id="serialized-line-numbers">1</div>
-                            <textarea 
-                                id="serialized-input" 
-                                class="json-input" 
-                                placeholder='在此貼上序列化的 JSON 字串...&#10;&#10;例如:&#10;"{\"name\": \"John\", \"age\": 30}"&#10;&#10;或&#10;{\\"name\\": \\"John\\", \\"age\\": 30}'
-                                spellcheck="false"
-                            ></textarea>
+                            <div class="line-numbers" id="line-numbers-left">1</div>
+                            <textarea id="json-input-left" class="json-input" placeholder='在此貼上或拖放 JSON 檔案...'
+                                spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                    <!-- Tree Mode -->
+                    <div class="editor-view tree-view" data-mode="tree">
+                        <div class="tree-container" id="tree-container-left"></div>
+                    </div>
+                    <!-- Table Mode -->
+                    <div class="editor-view table-view" data-mode="table">
+                        <div class="table-container" id="table-container-left">
+                            <div class="table-placeholder">表格模式適用於 JSON 陣列資料</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Result Section -->
-            <div class="result-section" id="result-section">
-                <div class="result-header">
-                    <h2>驗證結果</h2>
-                    <div class="result-status" id="result-status">
-                        <span class="status-icon">⏳</span>
-                        <span class="status-text">等待輸入...</span>
+            <!-- Center Controls -->
+            <div class="center-controls">
+                <button class="center-btn" id="btn-copy-to-right" title="複製到右邊">→</button>
+                <button class="center-btn" id="btn-copy-to-left" title="複製到左邊">←</button>
+                <button class="center-btn compare-btn" id="btn-show-diff" title="顯示差異">⚖️</button>
+                <button class="center-btn" id="btn-swap" title="交換">⇄</button>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="panel right-panel" id="right-panel">
+                <div class="panel-header">
+                    <div class="panel-title">比較區 / 結果</div>
+                    <div class="mode-switcher">
+                        <button class="mode-btn active" data-mode="text" data-panel="right">Text</button>
+                        <button class="mode-btn" data-mode="tree" data-panel="right">Tree</button>
+                        <button class="mode-btn" data-mode="table" data-panel="right">Table</button>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="icon-btn" id="btn-copy-right" title="複製">📋</button>
+                        <button class="icon-btn" id="btn-clear-right" title="清除">🗑️</button>
+                        <button class="icon-btn" id="btn-expand-all-right" title="展開全部">➕</button>
+                        <button class="icon-btn" id="btn-collapse-all-right" title="收合全部">➖</button>
                     </div>
                 </div>
-                <div class="result-content" id="result-content">
-                    <div class="empty-state">
-                        <div class="empty-icon">🔍</div>
-                        <p>輸入 JSON 後點擊「驗證」按鈕</p>
+                <div class="panel-content">
+                    <!-- Text Mode -->
+                    <div class="editor-view text-view active" data-mode="text">
+                        <div class="editor-wrapper">
+                            <div class="line-numbers" id="line-numbers-right">1</div>
+                            <textarea id="json-input-right" class="json-input" placeholder='第二個 JSON（用於比較）或查看結果...'
+                                spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                    <!-- Tree Mode -->
+                    <div class="editor-view tree-view" data-mode="tree">
+                        <div class="tree-container" id="tree-container-right"></div>
+                    </div>
+                    <!-- Table Mode -->
+                    <div class="editor-view table-view" data-mode="table">
+                        <div class="table-container" id="table-container-right">
+                            <div class="table-placeholder">表格模式適用於 JSON 陣列資料</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="footer">
-            <p>Made with ❤️ | <a href="https://github.com" target="_blank">GitHub</a></p>
-        </footer>
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span class="status-item" id="status-validity">
+                    <span class="status-icon">⏳</span>
+                    <span class="status-text">等待輸入</span>
+                </span>
+            </div>
+            <div class="status-center">
+                <span class="status-item" id="status-info"></span>
+            </div>
+            <div class="status-right">
+                <span class="status-item" id="status-size">0 字元</span>
+            </div>
+        </div>
+
+        <!-- Query Modal -->
+        <div class="modal" id="query-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🔍 查詢 JSON</h2>
+                    <button class="modal-close" id="close-query-modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="query-input-group">
+                        <label>輸入 JSONPath 查詢：</label>
+                        <input type="text" id="query-input" class="query-input"
+                            placeholder="例如: $.store.book[0].title 或 $..author">
+                        <div class="query-help">
+                            常用語法：<code>$</code> 根節點, <code>.key</code> 屬性, <code>[0]</code> 陣列索引, <code>..</code> 遞迴搜尋,
+                            <code>[*]</code> 所有元素
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="btn-execute-query">執行查詢</button>
+                    <div class="query-result" id="query-result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validation Result Modal -->
+        <div class="modal" id="validation-modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2 id="validation-modal-title">驗證結果</h2>
+                    <button class="modal-close" id="close-validation-modal">×</button>
+                </div>
+                <div class="modal-body" id="validation-modal-body">
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>

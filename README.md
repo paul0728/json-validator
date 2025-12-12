@@ -1,46 +1,53 @@
-# JSON Validator
+# JSON Editor
 
-一個簡單易用的 JSON 驗證工具，幫助你快速檢查 JSON 格式是否正確。
+完整的 JSON 編輯器網頁工具，參考 [jsoneditoronline.org](https://jsoneditoronline.org/) 設計。
 
-🔗 **線上使用**: [GitHub Pages](https://你的用戶名.github.io/json-validator)
+🔗 **線上使用**: [https://paul0728.github.io/json-validator](https://paul0728.github.io/json-validator)
 
-## 功能特色
+## ✨ 功能
 
-### 📝 Raw JSON 驗證
+### 編輯模式
 
-- 貼上原始 JSON 內容
-- 即時驗證語法正確性
-- 顯示錯誤位置（行號、列號）
-- 提供具體修正建議
-- 一鍵格式化功能
+- **Text Mode** - 原始文字編輯
+- **Tree Mode** - 可折疊樹狀結構視圖
+- **Table Mode** - 陣列資料表格顯示
 
-### 🔗 Serialized JSON 驗證
+### 格式化工具
 
-- 支援序列化後的 JSON 字串（如 API 回應）
-- 自動反序列化處理
-- 處理常見轉義字元 (`\n`, `\"`, `\\` 等)
-- 顯示反序列化結果
+- **格式化** - 美化 JSON 縮排
+- **壓縮** - 移除空白字元
+- **修復** - 自動修復常見錯誤
 
-## 錯誤偵測
+### 驗證功能
 
-工具能夠偵測並提供修正建議的常見錯誤：
+- **JSON 驗證** - 檢查語法正確性
+- **序列化驗證** - 驗證轉義後的 JSON 字串
+- 錯誤位置定位、修正建議
 
-| 錯誤類型 | 說明 |
-|---------|------|
-| 尾部逗號 | `{"a": 1,}` - 最後元素後的多餘逗號 |
-| 缺少引號 | `{name: "test"}` - Key 沒有用雙引號包覆 |
-| 單引號 | `{'name': 'test'}` - 使用單引號而非雙引號 |
-| 缺少逗號 | `{"a": 1 "b": 2}` - 元素間缺少逗號 |
-| 不完整結構 | `{"a": 1` - 缺少結束括號 |
+### 進階功能
 
-## 快捷鍵
+- **比較** - 比較兩個 JSON 的差異
+- **查詢** - JSONPath 語法查詢
+- **JSON ↔ CSV** - 格式互轉
 
-- `Ctrl + Enter` / `Cmd + Enter`: 驗證 JSON
+### 檔案操作
 
-## 本地開發
+- 拖放檔案載入
+- 下載 JSON 檔案
+- 複製到剪貼簿
+
+## ⌨️ 快捷鍵
+
+| 快捷鍵 | 功能 |
+|-------|------|
+| `Ctrl + Enter` | 驗證 JSON |
+| `Ctrl + Shift + F` | 格式化 |
+| `Escape` | 關閉對話框 |
+
+## 🚀 本地開發
 
 直接用瀏覽器開啟 `index.html` 即可。
 
-## 授權
+## 📝 License
 
-MIT License
+MIT
