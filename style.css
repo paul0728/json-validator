@@ -345,7 +345,7 @@ body {
     user-select: none;
     border-right: 1px solid var(--border-color);
     overflow: hidden;
-    white-space: pre;
+    white-space: pre-line;
 }
 
 .json-input {
@@ -360,8 +360,6 @@ body {
     resize: none;
     outline: none;
     overflow: auto;
-    writing-mode: horizontal-tb;
-    white-space: pre;
 }
 
 .json-input::placeholder {
