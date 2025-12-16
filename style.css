@@ -472,6 +472,8 @@ body {
 /* Table View */
 .table-view {
     overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .table-container {
